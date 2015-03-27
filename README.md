@@ -3,6 +3,13 @@
 Helpdesk
 ========
 
+###Installing:
+
+  -bundle install
+  -rename .sample.env to .env
+  -set your secret_key
+  -rake db:setup
+
 Guidelines
 ----------
 
