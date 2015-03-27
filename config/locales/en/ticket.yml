@@ -1,0 +1,9 @@
+en:
+  ticket:
+    labels:
+      created_by: Created by
+      solved_at: Solved at
+      created_at: Created at
+      updated_at: Updated at
+    messages:
+      none: No tickets were found.

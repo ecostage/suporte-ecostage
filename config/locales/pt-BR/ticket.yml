@@ -1,0 +1,35 @@
+pt-BR:
+  activerecord:
+    attributes:
+      ticket:
+        attachment_content_type: Conteúdo
+        subject: Título
+        content: Descrição
+        is_priority: Urgente?
+        attachment: Anexo
+        estimated_time: Tempo estimado
+        complexity: Complexidade
+        assign_to: Atribuído à
+    errors:
+      models:
+        ticket:
+          attributes:
+            attachment:
+              spoofed_media_type: arquivo inválido
+            attachment_content_type:
+              invalid: inválido
+            subject:
+              blank: não pode estar em branco
+            content:
+              blank: não pode estar em branco
+  ticket:
+    labels:
+      created_by: Criado por
+      solved_at: Resolvido em
+      created_at: Criado em
+      updated_at: Atualizado em
+    messages:
+      none: Nenhum ticket encontrado.
+    new:
+      headings:
+        main: Novo ticket

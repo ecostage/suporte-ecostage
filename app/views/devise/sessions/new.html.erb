@@ -1,0 +1,26 @@
+<h2><%= t('devise.sessions.title') %></h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), role: 'form') do |f| %>
+  <%= render "layouts/flashes" -%>
+
+  <div class="form-group">
+    <%= f.email_field :email, autofocus: true, class: 'form-control input-lg login', placeholder: t('devise.sessions.placeholders.email') %>
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control input-lg password', placeholder: t('devise.sessions.placeholders.password')  %>
+  </div>
+
+  <% if devise_mapping.rememberable? -%>
+    <div class="form-group">
+      <div class="checkbox">
+        <%= f.label :remember_me do %>
+          <%= f.check_box :remember_me, class: 'checkbox' %>
+          <%= User.human_attribute_name(:remember_me) %>
+        <% end %>
+      </div>
+    </div>
+  <% end -%>
+
+  <div><%= f.submit "Log in", class: 'btn btn-lg btn-primary btn-block' %></div>
+<% end %>
+<div class="links">
+  <%= render "devise/shared/links" %>
+</div>

@@ -1,0 +1,35 @@
+<%= form_for(@group) do |f| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+      <ul>
+      <% @group.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, I18n.t('group.form.label.name') %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :purpose, I18n.t('group.form.label.purpose') %><br>
+    <%= f.text_field :purpose %>
+  </div>
+
+  <div class="field">
+    <%= f.select :member_ids, User.client.all.collect { |user| [user.email, user.id] }, {}, {multiple: true} %>
+  </div>
+
+  <div class="field">
+    <%= f.select :channel_ids, Channel.all.collect { |channel| [channel.name, channel.id] }, {}, {multiple: true} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit I18n.t('group.form.button.create') %>
+  </div>
+<% end %>

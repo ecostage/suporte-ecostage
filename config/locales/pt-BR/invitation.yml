@@ -1,0 +1,26 @@
+pt-BR:
+  helpers:
+    submit:
+      invitation:
+        create: Convidar!
+    label:
+      invitation:
+        email: Email
+  invitation:
+    registration:
+      password: Senha
+      password_confirmation: Confirmação de senha
+      button:
+        submit: Cadastrar
+    headings:
+      main:
+        client: "Novo cliente"
+        attendant: "Novo atendente"
+    link:
+      create: Convidar novo usuário
+      client: Convidar novo usuário
+      attendant: Convidar novo atendente
+    flash_messages:
+      existent_user: Usuário existente
+      success: "%{email} foi convidado com sucesso!"
+      invited_user: "%{email} já foi convidado."

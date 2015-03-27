@@ -1,0 +1,124 @@
+html, body { height: 100%; }
+
+body {
+  font-family: Helvetica
+}
+
+@import "vars";
+@import "mixins";
+@import "tickets";
+@import "metrics";
+@import "comments";
+@import "groups";
+@import "login";
+@import "nav";
+
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px dotted #3c88bf;
+}
+
+a.icon {
+  border: none;
+}
+
+.dropdown a:hover, .navbar a:hover {
+  border: none;
+}
+
+.popover-content {
+  width: 250px;
+}
+
+.popover {
+  .flashes { margin: 0px; }
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thumb {
+  width: 50px;
+}
+
+#search {
+  width: 100px;
+  transition: width 0.2s;
+  height: 25px;
+  @include round-corners(60px)
+}
+
+#search:focus {
+  width: 200px;
+  transition: width 0.2s;
+}
+
+h1 {
+  margin-bottom: 25px;
+}
+
+a.link-danger {
+  color: #a00005;
+}
+
+a.link-danger:hover {
+  color: #800004;
+  border-bottom: 1px dotted #800004;
+}
+
+.clear {
+  clear: both;
+}
+
+.flashes {
+  margin: 20px 0px;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  padding-bottom: 30px
+}
+
+footer {
+  height: 30px;
+  position: relative;
+  clear:both;
+}
+
+.profiles {
+  .thumb {
+    width: 128px;
+    margin: 30px;
+    margin-left: 42px;
+  }
+}
+
+.tracer {
+  color: #f0f0f0;
+  i { font-size: 1.4em; }
+  font-weight: 200;
+  margin: 0px 20px;
+  margin-top: 8px;
+}
+
+a {
+  cursor: pointer;
+}
+
+div.invitation-title {
+  padding-bottom: 30px;
+
+  h1 {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    border-bottom: 0px;
+  }
+
+  small {
+    font-size: 14px;
+  }
+}

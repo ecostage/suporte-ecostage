@@ -1,0 +1,57 @@
+.metric {
+  @include sla;
+  @include card;
+
+  padding: 15px;
+  background-color: #f7f7f7;
+  margin-top: 20px;
+
+  .avg-sla {
+    i { font-size: 1.5em; }
+    display: inline-block;
+  }
+
+  .name {
+    margin-bottom: 20px;
+    font-weight: bold;
+    .prefix { font-weight: 200 }
+  }
+
+  .info {
+    vertical-align: top;
+    margin-left: 5px;
+  }
+
+  .avg-time {
+    display: inline-block;
+  }
+
+  .chart {
+    canvas {
+      width: 200px;
+    }
+    margin: 10px;
+  }
+}
+
+.metrics {
+  .legend {
+    list-style: none;
+    li {
+      display: inline-block;
+      width: 120px;
+      text-overflow: ellipsis;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+
+    width: 350px;
+
+    margin: 18px;
+    margin-right: 0px;
+    padding-left: 40px;
+
+
+    @include status-colors;
+  }
+}

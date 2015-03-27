@@ -1,0 +1,84 @@
+<div>
+  <h4><%= t :channels %></h4>
+  <ul class="nav nav-sidebar channels">
+      <% channels.each do |channel| %>
+        <%= content_tag :li, class: ('active' if active_channel?(channel)) do %>
+          <%= link_to channel_tickets_path(channel), class: 'channel' do %>
+            <span class="truncate channel-name">
+              <span class="prefix">#</span> <%= channel.name %>
+          </span>
+          <% if channel_has_notification?(channel) %>
+            <span class="badge alert-info pull-right">
+              <%= channel_notification_number(channel) %>
+            </span>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <% if policy(Channel).new? %>
+    <div class="action">
+    <a id="create-channel"
+      data-html="true"
+      data-toggle="popover"
+      data-title="<%= t('links.channel.new') %>"
+      data-content-target="#new-channel-popover">
+      <%= t('links.channel.new') %>
+    </a>
+    </div>
+
+    <template id="new-channel-popover">
+      <%= form_for(Channel.new) do |f| %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, required: true, class: 'form-control'  %>
+        </div>
+        <div class="form-group">
+          <%= f.label :purpose %>
+          <%= f.text_area :purpose, class: 'form-control' %>
+        </div>
+        <div class="actions">
+          <%= f.submit t('links.save'), class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </template>
+  <% end %>
+
+  <% if policy(Group).index? %>
+    <h4><%= t :groups %></h4>
+    <ul class="nav nav-sidebar groups">
+      <% Group.all.each do |group| %>
+        <li><%= link_to group.name, group, class: 'group truncate' %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if policy(Group).new? %>
+    <div class="action">
+    <a id="create-group"
+      data-html="true"
+      data-toggle="popover"
+      data-title="<%= t('links.group.new') %>"
+      data-content-target="#new-group-popover">
+      <%= t('links.group.new') %>
+    </a>
+    </div>
+
+    <template id="new-group-popover">
+      <%= form_for(Group.new) do |f| %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, required: true, class: 'form-control'  %>
+        </div>
+        <div class="form-group">
+          <%= f.label :purpose %>
+          <%= f.text_area :purpose, class: 'form-control' %>
+        </div>
+        <div class="actions">
+          <%= f.submit t('links.save'), class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </template>
+  <% end %>
+</div>

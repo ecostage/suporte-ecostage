@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4">
+    <% if current_user.client? %>
+      <div class="invitation-title">
+        <h1><%= t('invitation.headings.main.client', group_name: current_user.group.name) %></h1>
+        <small>Grupo: <%= current_user.group.name %></small>
+      </div>
+    <% else %>
+      <h1><%= t('invitation.headings.main.attendant') %> </h1>
+    <% end %>
+
+    <%= form_for @invitation do |f| %>
+      <div class="form-group">
+        <%= email_field_tag :email, @invitation.user.try(:email), autofocus: true, id: 'invitation_email', class: 'form-control input-lg login', placeholder: 'Email' %>
+      </div>
+
+      <div><%= f.submit class: 'btn btn-lg btn-primary btn-block' %></div>
+    <% end %>
+  </div>
+</div>

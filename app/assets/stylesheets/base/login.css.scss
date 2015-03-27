@@ -1,0 +1,13 @@
+.login-box {
+  @include round-corners(15px);
+  h2, h3, h4 { margin-top: 0px; margin-bottom: 25px; }
+  padding: 20px;
+  margin-top: 40px;
+  color: #2f2f2f;
+  .links {
+    margin-top: 10px;
+  }
+
+  background-color: #f8f8f8;
+  .login { margin-bottom: 5px; }
+}

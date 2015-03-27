@@ -1,0 +1,62 @@
+- hosts: default
+  sudo: yes
+  vars:
+    db_name: tracersoft
+    db_password: supertracer10
+    postgres_users:
+      - name: vagrant
+        pass: vagrant
+  roles:
+    - ANXS.postgresql
+    - { role: rvm_io.rvm1-ruby, tags: ruby, sudo: true }
+    - crushlovely.imagemagick
+    - { role: nicolai86.phantomjs }
+  tasks:
+    - apt: "pkg={{item}} state=absent"
+      with_items:
+        - postgresql
+        - postgresql-contrib
+
+    - apt: "pkg={{item}} state=latest force=yes"
+      with_items:
+        - tmux
+        - libqtwebkit-dev
+        - curl
+        - wget
+        - git
+        - build-essential
+        - libpq-dev
+        - libssl-dev
+        - libxml2-dev
+        - vim
+        - autoconf
+        - automake
+        - software-properties-common
+        - python-software-properties
+        - python-psycopg2
+        - libmysqld-dev
+        - openjdk-7-jre-headless
+        - phantomjs
+
+    - name: Download elasticsearch
+      get_url: url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb dest=/tmp/elasticsearch-1.3.2.deb mode=0440
+
+    - apt: deb=/tmp/elasticsearch-1.3.2.deb
+
+    - apt_repository: repo='ppa:martin-frost/thoughtbot-rcm'
+    - apt_repository: repo='ppa:webupd8team/java'
+    - apt_repository: repo='ppa:chris-lea/node.js'
+
+    - apt: "pkg={{item}} state=latest force=yes update_cache=yes"
+      with_items:
+        - zsh
+        - rcm
+        - nodejs
+
+    - service: name=postgresql state=stopped
+    - service: name=postgresql state=started
+    - name: "Ensure Elasticsearch is Running"
+      service: name=elasticsearch state=restarted
+
+    - name: Create postgresql user
+      postgresql_user: "name={{db_name}} password={{db_password}} role_attr_flags=CREATEDB,SUPERUSER"

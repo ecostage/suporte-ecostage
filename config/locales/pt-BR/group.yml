@@ -1,0 +1,10 @@
+pt-BR:
+  group:
+    links:
+      add_channel: 'Adicionar Canal'
+      add_member: 'Adicionar'
+  activerecord:
+    attributes:
+      group:
+        name: Nome
+        purpose: Descrição

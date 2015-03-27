@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: helpdesk_development
+  host: localhost
+  username: tracersoft
+  password: supertracer10
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+
+test:
+  <<: *default
+  host: localhost
+  username: tracersoft
+  password: supertracer10
+  database: helpdesk_test

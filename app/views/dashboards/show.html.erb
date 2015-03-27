@@ -1,0 +1,4 @@
+<h1>Últimos atualizados</h1>
+<% @tickets.each do |ticket| %>
+  <%= render "tickets/item", ticket: ticket %>
+<% end %>

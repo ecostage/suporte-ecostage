@@ -1,0 +1,36 @@
+@mixin status-colors {
+  .unread { color: $unread-color; }
+  .in_progress { color: $in_progress-color; }
+  .done { color: $done-color; }
+  .approved { color: $approved-color; }
+  .reproved { color: $reproved-color; }
+  .canceled { color: $canceled-color; }
+}
+
+@mixin sla {
+  ul { margin: 0px; padding: 0px; width: auto; }
+
+  li { list-style: none; display: inline-block; }
+
+  i.s-0 { font-size: 0.85em; color: #eaeaea; }
+  i.s-1 { font-size: 0.85em; color: #3ec81e; }
+  i.s-2 { font-size: 0.85em; color: #a4d307; }
+  i.s-3 { font-size: 0.85em; color: #e9df00; }
+  i.s-4 { font-size: 0.85em; color: #dc8600; }
+  i.s-5 { font-size: 0.85em; color: #b31200; }
+  i.s-dis { opacity: 0.1; color: #909090; }
+}
+
+// Round all corners by amount
+@mixin round-corners($amount: 5px) {
+  border-radius: $amount;
+  -moz-border-radius: $amount;
+  -webkit-border-radius: $amount;
+}
+
+@mixin card {
+  margin: 5px 0px;
+  padding: 8px;
+  background-color: #f1f1f1;
+}
+

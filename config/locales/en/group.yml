@@ -1,0 +1,18 @@
+en:
+  activerecord:
+    attributes:
+      group:
+        name: Name
+        purpose: Purpose
+  group:
+    links:
+      add_channel: 'Add Channel'
+      add_member: 'Add'
+    link:
+      create: 'Create Group'
+    form:
+      label:
+        name: 'Name'
+        purpose: 'Purpose'
+      button:
+        create: 'Create Group'

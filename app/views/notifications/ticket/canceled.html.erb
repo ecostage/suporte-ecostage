@@ -1,0 +1,5 @@
+<%= render '/notifications/shared/img_subject' %>
+<p> Motivo: <%= @notifiable.cancel_reason %> </p>
+<p>
+  <%= link_to 'Clique aqui para visualizar o ticket', channel_ticket_url(@notifiable.channel, @notifiable) %>.
+</p>

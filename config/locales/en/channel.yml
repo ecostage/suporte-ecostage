@@ -1,0 +1,15 @@
+en:
+  activerecord:
+    attributes:
+      channel:
+        name: Name
+        purpose: Purpose
+  channel:
+    link:
+      create: 'Create Channel'
+    button:
+      create: 'Create Channel'
+    form:
+      label:
+        name: 'Name'
+        purpose: 'Purpose'

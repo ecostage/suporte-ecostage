@@ -1,0 +1,56 @@
+<% unless current_user.client? %>
+  <!-- Popovers -->
+  <template id="estimated-time-popover">
+    <div class="ticket-popovers">
+      <%= form_for [@channel, @ticket], remote: true, data: { "reverse-id"=>"#estimated-time-popover" } do |f| %>
+        <%= hidden_field_tag :format, :json %>
+        <div class="form-group">
+          <%= f.range_field :estimated_time, max: 100, min: 1, step: 6 %>
+        </div>
+        <%= f.submit value: t('links.save'), class: "btn btn-default btn-sm",
+          "data-loading-text"=>t('loading') %>
+      <% end %>
+    </div>
+  </template>
+  <template id="assign-to-popover">
+
+    <div class="ticket-popovers">
+      <%= form_tag(assign_to_ticket_path(@ticket), { id: 'assign-to', method: :post, remote: true, 'data-type' => 'json', :'data-type' => 'json'}) do %>
+        <%= hidden_field_tag :format, :json %>
+        <div class="form-group">
+          <%= select_tag :attendant_id, options_from_collection_for_select(User.attendant, "id", "email", @ticket.assign_to_id) %>
+        </div>
+        <%= submit_tag '', value: t('links.save'), class: "btn btn-default btn-sm", "data-loading-text"=>t('loading'), data: { 'behaviour' => 'assign-to' } %>
+      <% end %>
+    </div>
+  </template>
+
+  <template id="complexity-popover">
+    <div class="ticket-popovers">
+    <%= form_for [@channel, @ticket], remote: true, data: { "reverse-id"=>"#complexity-popover" } do |f| %>
+      <%= hidden_field_tag :format, :json %>
+      <div class="form-group">
+        <%= f.range_field :complexity, max: 3, min: 1 %>
+      </div>
+      <%= f.submit value: t('links.save'), class: "btn btn-default btn-sm",
+        "data-loading-text"=>t('loading') %>
+    <% end %>
+    </div>
+  </template>
+  <% end %>
+  
+  <% if policy(@ticket).cancel? %>
+  <template id="cancel-popover">
+    <div class="ticket-popovers">
+    <%= form_tag channel_tickets_cancel_path(@channel, @ticket),
+      remote: true, method: :PUT, data: { "reverse-id"=>"#cancel-popover" } do %>
+      <%= hidden_field_tag :format, :json %>
+      <div class="form-group">
+        <%= text_area_tag :reason, '', class: 'form-control' %>
+      </div>
+      <%= submit_tag t('links.save'), class: "btn btn-default btn-sm",
+        "data-loading-text"=>t('loading') %>
+    <% end %>
+    </div>
+  </template>
+<% end %>

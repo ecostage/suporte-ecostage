@@ -1,0 +1,72 @@
+.add-channel {
+  font-size: 0.6em;
+}
+
+.group-channels {
+  a {
+    margin-right: 10px;
+  }
+}
+
+.groups {
+  h1 {
+    .dropdown {
+      display: inline-block;
+      i { font-size: 0.6em; }
+      a, a:hover {
+        border: none;
+      }
+    }
+  }
+}
+
+.groups-show {
+  .add-user-box {
+    @include card;
+    @include round-corners(50%);
+    height: 96px;
+    width: 96px;
+    padding: 12px;
+
+    .add-user {
+      i {
+        margin: 20px;
+        font-size: 2.5em;
+      }
+    }
+  }
+
+  .inactive {
+    opacity: 0.5;
+  }
+
+  .delete-user {
+    position: absolute;
+    bottom: 13px;
+    right: 33px;
+  }
+
+  .user {
+    @include card;
+    background-color: #f7f7f7;
+    padding: 10px;
+
+    .thumb {
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+
+    .img {
+      margin-left: 10px;
+      width: 50px;
+      display: inline-block;
+    }
+
+    .info {
+      width: 60%;
+      display: inline-block;
+      margin: 8px;
+      vertical-align: top;
+    }
+  }
+}

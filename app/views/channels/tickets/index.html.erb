@@ -1,0 +1,25 @@
+
+<div class="statuses-filter">
+  <div class="pull-right">
+    <span><%= link_to t('links.ticket.open'), channel_tickets_path(@channel, params.except(:status)) %></span>
+    <span><%= link_to t('links.ticket.approved'), channel_tickets_path(@channel, params.merge(status: :approved)) %></span>
+    <span><%= link_to t('links.ticket.cancelled'), channel_tickets_path(@channel, params.merge(status: :canceled)) %></span>
+  </div>
+</div>
+
+<h1>#<%= @channel.name %></h1>
+<% if policy(Ticket).new? %>
+  <%= link_to t('links.ticket.new'), new_channel_ticket_path(@channel) %>
+<% end %>
+
+<div class="clear"></div>
+<div class="tickets">
+<% if @tickets.empty? %>
+  <p><em><%= t('ticket.messages.none') %></em></p>
+<% end %>
+<% @tickets.apply_sort.each do |ticket| %>
+  <%= render 'tickets/item', ticket: ticket %>
+<% end %>
+</div>
+
+<%= paginate @tickets %>

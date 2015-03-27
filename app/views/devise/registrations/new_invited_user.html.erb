@@ -1,0 +1,20 @@
+<h4>Bem vindo! <%= @user.email %></h4>
+
+<%= simple_form_for(resource, as: resource_name, url: accept_invite_path, role: :form) do |f| %>
+  <%= render "layouts/flashes" -%>
+
+  <div class="form-group">
+    <%= hidden_field_tag :invited_user_token, @token %>
+    <%= f.password_field :password, required: true, class: 'form-control input-lg password', placeholder: t('invitation.registration.password') %>
+  </div>
+
+  <div class="form-group">
+    <%= f.password_field :password_confirmation, required: true, class: 'form-control input-lg password', placeholder: t('invitation.registration.password_confirmation') %>
+  </div>
+
+  <%= f.button :submit, t('invitation.registration.button.submit'), class: 'btn btn-lg btn-primary btn-block' %>
+<% end %>
+
+<div class="links">
+  <%= render "devise/shared/links" %>
+</div>

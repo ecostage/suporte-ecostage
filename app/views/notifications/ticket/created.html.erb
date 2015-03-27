@@ -1,0 +1,5 @@
+<%= render '/notifications/shared/img_subject' %>
+
+<p style="font-size: 22px; font-weight: 500;">#<%= @notifiable.id %> - <%= @notifiable.subject %></p>
+<p><em><%= @notifiable.content %></em></p>
+<%= link_to 'Clique aqui para visualizar o ticket', channel_ticket_url(@notifiable.channel, @notifiable) %>.

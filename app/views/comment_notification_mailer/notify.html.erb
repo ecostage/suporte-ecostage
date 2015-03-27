@@ -1,0 +1,12 @@
+<% if @comment.author.avatar.present? %>
+  <% content_for :img do %>
+    <%= image_tag @comment.author.avatar.url(:square), style: 'border-radius: 50%; width: 100px;' %>
+  <% end %>
+<% end %>
+<% content_for :subject do %>
+  <p>
+    <%= @comment.author.email %> adicionou um comentário no ticket <%= link_to truncate(@comment.ticket.subject), channel_ticket_url(@comment.ticket.channel, @comment.ticket) %>.
+  </p>
+<% end %>
+<p><em><%= @comment.content %></em></p>
+<%= link_to 'Clique aqui para visualizar o ticket', channel_ticket_url(@comment.ticket.channel, @comment.ticket) %>.

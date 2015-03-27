@@ -1,0 +1,152 @@
+<div class="ticket-page">
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= link_to 'Voltar para a página de tickets', channel_tickets_path(@ticket.channel) %>
+          <h2>
+            #<%= @ticket.id %> - <%= @ticket.subject %>
+          </h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <%= simple_format @ticket.content %>
+        </div>
+      </div>
+
+      <% unless current_user.client? %>
+        <div class="row">
+          <div class="col-sm-4">
+            <label><%= Ticket.human_attribute_name(:estimated_time) %>: </label>
+            <a data-toggle="popover"
+              data-html="true"
+              data-placement="bottom"
+              data-success-use="estimated_time"
+              title="<%= Ticket.human_attribute_name(:estimated_time) %>"
+              data-content-target="#estimated-time-popover">
+              <%= @ticket.estimated_time || t('not_defined') %>
+            </a>
+          </div>
+          <div class="col-sm-4">
+            <label><%= Ticket.human_attribute_name(:assign_to) %>: </label>
+            <a
+              id="assign-to-target"
+              data-toggle="popover"
+              data-html="true"
+              data-placement="bottom"
+              data-success-use="assign_to"
+              title="<%= Ticket.human_attribute_name(:assign_to) %>"
+              data-content-target="#assign-to-popover">
+              <% if @ticket.assign_to_id %>
+                <%= @ticket.assign_to.email %>
+              <% else %>
+                <%= t('not_defined') %>
+              <% end %>
+            </a>
+          </div>
+          <div class="col-sm-4">
+            <label><%= Ticket.human_attribute_name(:complexity) %>: </label>
+            <a data-toggle="popover"
+              data-html="true"
+              data-placement="bottom"
+              data-success-use="complexity"
+              title="<%= Ticket.human_attribute_name(:complexity) %>"
+              data-content-target="#complexity-popover">
+              <%= @ticket.complexity || t('not_defined') %>
+            </a>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @ticket.attachment.present? %>
+      <div class="row">
+        <div class="col-sm-6">
+          <label><%= Ticket.human_attribute_name(:attachment) %>: </label>
+          <%= link_to @ticket.attachment_file_name, ticket_attachment_download_path(@ticket), 'target'=>'_blank' %>
+        </div>
+      </div>
+      <% end %>
+
+      <%= render 'comments' %>
+    </div>
+
+    <div class="col-sm-4 ticket-sidebar">
+      <% unless @ticket.unread? %>
+        <div class="row">
+          <div class="col-sm-12">
+            <center>
+              <% if @ticket.is_priority %>
+                <%= image_tag "stamps/important.png", class: "stamp img-circle" %>
+              <% end %>
+              <%= image_tag "stamps/#{@ticket.status}.png", class: "stamp", title: (@ticket.cancel_reason if @ticket.canceled?) %>
+            </center>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="col-sm-2">
+          <%= content_tag :span, title: @ticket.created_by.try(:email) do %>
+            <%= image_tag @ticket.created_by.avatar(:thumb), class: 'img-circle thumb' %>
+          <% end %>
+        </div>
+        <div class="col-sm-10">
+          <%= @ticket.created_by.email %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-11 col-sla">
+          <center>
+            <ul>
+              <li><%= complexity_image(@ticket, self) %></li>
+              <% resolution_sla(@ticket) do |icon| %>
+                <li><%= icon %></li>
+              <% end %>
+            </ul>
+          </center>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <center>
+          <hr />
+          <div class="actions">
+            <% if policy(@ticket).done? %>
+              <%= link_to t('links.ticket.done'), channel_tickets_done_path(@channel, @ticket),
+                remote: true, method: :PUT, class: 'btn btn-info',
+                data: { "loading-text"=>t('loading'), "complete-text"=>t('success') } %>
+            <% end %>
+            <% if policy(@ticket).approve? %>
+              <%= link_to t('links.ticket.approve'), channel_tickets_approve_path(@channel, @ticket),
+                remote: true, method: :PUT, class: 'btn btn-success',
+                data: { "loading-text"=>t('loading'), "complete-text"=>t('success'),
+                  "data-toggle"=>"button" } %>
+            <% end %>
+            <% if policy(@ticket).reprove? %>
+              <%= link_to t('links.ticket.reprove'), channel_tickets_reprove_path(@channel, @ticket),
+                remote: true, method: :PUT, class: 'btn btn-danger',
+                data: { "loading-text"=>t('loading'), "complete-text"=>t('success'),
+                  "data-toggle"=>"button" } %>
+            <% end %>
+            <% if policy(@ticket).cancel? %>
+              <a class="link-danger" data-toggle="popover"
+                data-html="true"
+                data-placement="bottom"
+                title="<%= t('links.ticket.cancel') %>"
+                data-complete-text="<%= t('success') %>"
+                data-loading-text="<%= t('loading') %>"
+                data-content-target="#cancel-popover">
+                <%= t('links.ticket.cancel') %>
+              </a>
+            <% end %>
+          </div>
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'popovers' %>
+
+</div>

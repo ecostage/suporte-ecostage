@@ -1,0 +1,80 @@
+en:
+  client: 'Client'
+  attendant: 'Attendant'
+  admin: 'Administrator'
+  channels: 'Channels'
+  groups: 'Groups'
+  notifications:
+    group:
+      success:
+        add_user: 'User added with success!'
+      error:
+        add_user: 'User already exists or is not a client.'
+    channel:
+      ticket_created: "%{actor} created a new ticket in %{target}"
+    ticket:
+      errors:
+        cancel: "Something goes wrong, fill the form correctly and try again"
+    server:
+      internal_error: "Something goes wrong and its not your fault"
+  date:
+    formats:
+      default:
+        "%m/%d/%Y"
+      with_weekday:
+        "%a %m/%d/%y"
+
+  time:
+    formats:
+      default:
+        "%a, %b %-d, %Y at %r"
+      date:
+        "%b %-d, %Y"
+      short:
+        "%B %d"
+  link:
+    sign_out: 'Sign out'
+
+  links:
+    profile: My profile
+    save: Save
+    ticket:
+      open: Open
+      done: Done
+      save: Save
+      new: New ticket
+      approve: Approve
+      approved: Approved
+      reprove: Reprove
+      reproved: Reproved
+      cancel: Cancel
+    channel:
+      new: New channel
+    group:
+      new: New group
+
+  label:
+    email: 'Email'
+    password: 'Password'
+
+  sla:
+    description: SLA Status
+  search: Search...
+  loading: Loading...
+  success: Success!
+  not_defined: Not defined
+  priority: Priority!
+  helpers:
+    ticket:
+      subject: What is this ticket about?
+      content: Give us more information about the problem.
+
+  metrics: Statistics
+  ticket:
+    statuses:
+      unread: Unread
+      in_progress: In progress
+      done: Done
+      approved: Approved
+      reproved: Reproved
+      canceled: Canceled

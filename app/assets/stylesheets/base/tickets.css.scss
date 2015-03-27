@@ -1,0 +1,115 @@
+.ticket {
+
+  @include card;
+
+  .col-status {
+    width: 40px;
+    padding-top: 1px;
+    padding-right: 0px;
+    padding-left: 5px;
+    margin-right: -16px;
+    i { font-size: 1.1em }
+    span {
+      margin-left: 1px;
+    }
+    @include status-colors
+  }
+
+  a {
+    color: #2f2f2f;
+    text-decoration: none;
+  }
+
+  em {
+    color: #aaaaaa;
+    font-size: 0.8em;
+  }
+
+  .col-sla {
+    @include sla;
+    display: inline-block;
+    min-width: 64px;
+    margin-left: 10px;
+  }
+
+  .ticket-title {
+    strong {
+      width: 80%;
+      margin-right: 12px;
+    }
+    em {
+      width: 20%;
+    }
+  }
+
+  .col-thumb { width: 26px; display: inline-block; margin-left: 2px; }
+
+  .priority { font-size: 1.1em; }
+
+  .col-more { right: -8px;
+position: relative; }
+
+  .col-infos { padding-right: 10px;}
+
+  .thumb { width: 26px;
+margin-top: -6px;
+margin-bottom: -4px; }
+
+  .complexity { width: 18px;
+margin-top: -6px;
+margin-bottom: -4px; }
+
+}
+
+.ticket.unread {
+  background-color: #fafafa;
+}
+
+.statuses-filter {
+  span {
+    margin: 5px;
+  }
+  div {
+    margin-top: 20px;
+  }
+}
+
+.channels-tickets-show {
+  .col-sla {
+    font-size: 2em;
+    @include sla
+  }
+
+  @include round-corners
+}
+
+.priority { color: #b31200; }
+
+.stamp {
+  margin: 5px;
+  width: 128px;
+}
+
+.ticket-page {
+  label {
+    color: #4a4a4a;
+    font-weight: 200;
+  }
+
+  p {
+    margin-top: 4px;
+    margin-bottom: 20px;
+  }
+
+  .ticket-sidebar {
+    .row {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.subject-field {
+  height: 48px;
+  font-size: 1.6em;
+}
+

@@ -1,0 +1,6 @@
+pt-BR:
+  activerecord:
+    attributes:
+      channel:
+        name: Nome
+        purpose: Descrição

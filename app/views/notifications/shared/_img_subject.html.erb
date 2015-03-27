@@ -1,0 +1,13 @@
+<% content_for :img do %>
+  <% if @actor.avatar.present? %>
+    <%= image_tag @actor.avatar.url(:square), style: 'border-radius: 50%; width: 100px;' %>
+  <% else %>
+    <%= image_tag attachments["missing.jpg"].url, style: 'border-radius: 50%; width: 100px;' %>
+  <% end %>
+<% end %>
+<% content_for :subject do %>
+  <%= @subject %>
+<% end %>
+<% unless @notifiable.unread? %>
+  <%= image_tag attachments["#{@notifiable.status}.png"].url, class: "stamp", style: 'border-radius: 70%; width: 200px;' %>
+<% end %>

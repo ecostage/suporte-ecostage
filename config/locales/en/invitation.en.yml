@@ -1,0 +1,21 @@
+en:
+  helpers:
+    submit:
+      invitation:
+        create: Send an invitation!
+    label:
+      invitation:
+        email: Email
+  invitation:
+    headings:
+      main:
+        client: "Invite new client for %{group_name}"
+        attendant: "Invite new attendant"
+    link:
+      create: Invite new user
+      client: Invite new client
+      attendant: Invite new attendant
+    flash_messages:
+      existent_user: This is an existent user
+      success: "%{email} was invited with success!"
+      invited_user: "%{email} has already been invited"

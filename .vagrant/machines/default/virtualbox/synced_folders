@@ -1,0 +1,1 @@
+{"nfs":{"/vagrant":{"nfs":true,"guestpath":"/vagrant","hostpath":"/apps/helpdesk","disabled":false,"type":"nfs","map_uid":501,"map_gid":0,"nfs_udp":true,"nfs_version":3,"uuid":"2067667460"}}}

@@ -1,0 +1,15 @@
+<% if @invitation.sender.avatar.present? %>
+  <% content_for :img do %>
+    <%= image_tag @invitation.sender.avatar.url(:square), style: 'border-radius: 50%; width: 100px;' %>
+  <% end %>
+<% end %>
+<% content_for :subject do %>
+  <%= @invitation.sender.email %> convidou voce para utilizar o suporte!
+<% end %>
+
+<p>
+  <%= t('mailer.invitations.body') %>
+</p>
+<p>
+  <%= link_to 'Clique aqui para cadastrar sua senha', new_user_registration_url(invite_token: @invitation.token), class: 'btn btn-primary btn-lg'%>
+</p>

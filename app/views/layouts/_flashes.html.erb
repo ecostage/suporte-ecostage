@@ -1,0 +1,7 @@
+<% if flash.any? %>
+  <div class="flashes">
+    <% flash.each do |key, value| -%>
+      <div role="alert" class="alert <%= bootstrap_class_for key %>"><%= value %></div>
+    <% end -%>
+  </div>
+<% end %>

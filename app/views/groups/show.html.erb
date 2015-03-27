@@ -1,0 +1,96 @@
+<h1><%= @group.name %></h1>
+<p><em><%= @group.purpose %></em></p>
+
+<template id="add-user-popover">
+  <div class="flashes">
+    <div class="alert alert-success" style="display: none"></div>
+    <div class="alert alert-danger" style="display: none"></div>
+  </div>
+  <div class="form-group">
+    <%= text_field_tag 'member_id', nil,
+      { class: 'form-control user-add-field', placeholder: "Email" }  %>
+  </div>
+  <%= button_tag t('group.links.add_member'),
+    class: 'btn btn-default',
+    id:    'add-client-button',
+    data:  { url: add_user_group_path(@group) } %>
+</template>
+
+<template id="add-channel-popover">
+  <div class="flashes">
+    <div class="alert alert-success" style="display: none"></div>
+    <div class="alert alert-danger" style="display: none"></div>
+  </div>
+  <div class="form-group">
+    <%= collection_select nil, :channel_id,
+      Channel.user_scope(current_user).where.not(id: @group.channel_ids),
+      :id, :name, {}, class: 'form-control channel-add-field' %>
+  </div>
+  <%= button_tag t('group.links.add_channel'), class: 'btn btn-default',
+    data: { 'add-channel-button' => true, url: add_channel_group_path(@group) } %>
+</template>
+
+<h3>
+  Canais
+  <% if policy(@group).update? %>
+    <a
+       class="add-channel"
+       id="add-channel"
+       data-html="true"
+       data-toggle="popover"
+       data-title="Adicionar canal"
+       data-content-target="#add-channel-popover">
+      Adicionar canal
+    </a>
+  <% end %>
+</h3>
+<p class="group-channels">
+  <% @group.channels.each do |channel| %>
+    <%= link_to channel_tickets_path(channel) do %>
+      <span class="prefix">#</span><%= channel.name %>
+    <% end %>
+  <% end %>
+</p>
+
+<h3>Usuários</h3>
+<div id="error"></div>
+<div class="row users">
+  <% @group.members.each do |user| %>
+    <div class="col-md-4 col-sm-6 col-lg-3 col-xs-12">
+      <div class="user <%= 'inactive' if user.inactive? or user.pending? %>" data-user-id="<%= user.id %>">
+        <div class="img">
+          <%= image_tag user.avatar.url(:square), class: 'img-circle thumb' %>
+        </div>
+        <div class="info">
+          <div class="truncate"><strong><%= user.email %></strong></div>
+          <div class="truncate"><em><%= user.name %></em></div>
+          <% if user.pending? %>
+            <div><em>Pendente</em></div>
+          <% end %>
+          <% if user.active? %>
+          <%= link_to icon(:trash), inactivate_member_group_path(@group, member_id: user.id),
+              data: { 'behaviour' => 'delete-member', 'method'=>:delete,
+              'confirm' => 'Tem certeza?', 'remote'=>true },
+              class: 'delete-user icon' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% if policy(@group).update? %>
+   <div class="col-sm-2 col-xs-12">
+      <div class="add-user-box">
+        <center>
+          <a
+             class="add-user"
+             data-html="true"
+             data-toggle="popover"
+             data-title="Adicionar usuário"
+             data-content-target="#add-user-popover">
+            <%= icon :plus %>
+          </a>
+        </center>
+      </div>
+    </div>
+    <% end %>
+</div>

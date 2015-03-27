@@ -1,0 +1,37 @@
+<%= form_for([@channel, @ticket], role: :form) do |f| %>
+  <% if @ticket.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @ticket.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.text_field :subject, class: "form-control subject-field", placeholder: t('helpers.ticket.subject') %>
+  </div>
+  <hr>
+  <div class="form-group">
+    <%= f.text_area :content, class: "form-control", rows: 10, placeholder: t('helpers.ticket.content') %>
+  </div>
+
+  <div class="form-group">
+    <div class="checkbox">
+      <%= f.label :is_priority do %>
+        <%= f.check_box :is_priority, class: "checkbox" %>
+        <%= Ticket.human_attribute_name(:is_priority) %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :attachment %>
+    <%= f.file_field :attachment %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit value: t('links.ticket.save'), class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="ROBOTS" content="NOODP" />
+  <meta name="viewport" content="initial-scale=1" />
+  <title>Suporte</title>
+  <%= stylesheet_link_tag :application, media: "all" %>
+  <%= render "layouts/javascript" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= body_class %>">
+  <div id="wrap">
+    <%= content_for?(:body) ? yield(:body) : yield %>
+    <div class="clear"></div>
+  </div>
+  <%= render 'layouts/footer' %>
+</body>
+</html>

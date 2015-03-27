@@ -1,0 +1,50 @@
+.comments {
+  margin-top: 30px;
+
+  .thumb {
+    width: 48px;
+  }
+
+  .img {
+    img {
+      margin-top: -40px;
+    }
+
+    position: relative;
+
+    top: 39px;
+    left: 0px;
+  }
+
+  .info {
+    * { display: inline-block; }
+    display: inline-block;
+
+
+    .date {
+      color: #afafaf;
+      font-size: 0.8em;
+      margin-left: 4px;
+      font-weight: 200;
+    }
+  }
+
+  .box {
+    margin-top: -15px;
+    display: inline-block;
+    width: 90%;
+    margin-left: 60px;
+  }
+
+  .client {
+    color: $client-color;
+  }
+
+  .attendant, .admin {
+    color: $attendant-color;
+  }
+
+  .comment {
+    margin-top: 10px;
+  }
+}

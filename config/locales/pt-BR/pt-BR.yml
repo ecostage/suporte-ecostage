@@ -1,0 +1,86 @@
+pt-BR:
+  auto_approval_comment: 'O ticket foi automaticamente aprovado após 15 dias sem atualizações.'
+  client: 'Cliente'
+  attendant: 'Atendente'
+  admin: 'Administrador'
+  channels: 'Canais'
+  groups: 'Grupos'
+  notifications:
+    group:
+      success:
+        add_user: 'Usuário adicionado com sucesso!'
+      error:
+        add_user: 'Usuário já cadastrado ou não é um cliente'
+    ticket:
+      created: "%{actor} criou um novo ticket no canal %{channel}"
+      reproved: "Um tiquete do canal %{channel} foi reprovado pelo %{actor}"
+      approved: "%{actor} aprovou um ticket no canal %{channel}"
+      assigned: "Você foi atribuído a um ticket do canal %{channel} pelo %{actor}"
+      done: "Um ticket foi concluído por %{actor} no canal %{channel}"
+      canceled: "Um ticket foi cancelado por %{actor} no canal %{channel}"
+      errors:
+        cancel: "Houve algum erro, por favor preencha o formulário corretamente"
+    server:
+      internal_error: "Houve um erro no nosso aplicativo"
+  date:
+    formats:
+      default:
+        "%m/%d/%Y"
+      with_weekday:
+        "%a %m/%d/%y"
+
+  time:
+    formats:
+      default:
+        "%H:%M:%S - %d/%m/%Y"
+      date:
+        "%b %-d, %Y"
+      short:
+        "%B %d"
+  link:
+    sign_out: 'Sair'
+
+  links:
+    profile: Meu perfil
+    save: Salvar
+    ticket:
+      all: Abertos
+      open: Aberto(s)
+      done: Concluído
+      save: Salvar
+      new: Novo ticket
+      approve: Aprovar
+      approved: Aprovado(s)
+      reprove: Reprovar
+      reproved: Reprovado
+      cancel: Cancelar
+      cancelled: Cancelado(s)
+    channel:
+      new: Novo canal
+    group:
+      new: Novo Grupo
+  sla:
+    description: Status do SLA
+  search: Pesquisar...
+  loading: Carregando...
+  success: Sucesso!
+  not_defined: Não definido
+  priority: Prioridade!
+  helpers:
+    ticket:
+      subject: Título
+      content: Descrição do problema
+
+  metrics: Estatísticas
+  ticket:
+    statuses:
+      unread: Não lido
+      in_progress: Em progresso
+      done: Concluído
+      approved: Aprovado
+      reproved: Reprovado
+      canceled: Cancelado
+  mailer:
+    invitations:
+      body: "Você foi convidado para fazer parte do suporte!"
+      subject: "Você foi convidado para fazer parte do suporte!"

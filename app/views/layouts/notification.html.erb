@@ -1,0 +1,51 @@
+<div>
+<table style="width: 100%;
+    background-color: #f8f7f5;
+    padding: 80px;
+    font-family: Helvetica, Arial;">
+  <tr>
+    <td align="center" valign="top">
+      <table style="width: 800px;
+    border: 1px solid #dfdfda;
+    background-color: #fffffe;
+    border-radius: 6px;">
+        <tr>
+          <td style="font-size: 20px;
+    font-weight: 500;
+    background-color: #2c3e50;
+    padding: 12px;
+    color: white;
+    border-radius: 4px;">Suporte!</td>
+        </tr>
+        <tr>
+          <td>
+            <table style="height: 400px;
+    width: 100%;
+    padding: 20px;">
+              <tr style="height: 100px; font-size: 24px">
+                <% if content_for?(:img) %>
+                  <td style="width: 120px;"><%= yield :img %></td>
+                <% end %>
+                <td><%= yield :subject %></td>
+              </tr>
+              <tr style="height: 2px"><td colspan="2" style="padding-top: 20px"><hr style=" border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);" /></tr>
+              <tr>
+                <td colspan="2" style="vertical-align: top;">
+                  <center><%= yield %></center>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-size: 10px; padding: 10px; background-color: #2c3e50; color: white;
+    border-radius: 4px;">Tracersoft - 2014</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>

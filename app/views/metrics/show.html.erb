@@ -1,0 +1,64 @@
+
+<div class="pull-right">
+  <ul class="legend">
+    <% Ticket.statuses_color.each do |status, color| %>
+      <li><%= icon :circle, '', class: status %> <%= Ticket.humanize_status(status) %></li>
+    <% end %>
+  </ul>
+</div>
+
+<h1><%= t :metrics %></h1>
+
+<h3><%= t :channels %></h3>
+<div class="row">
+  <% @channels_metrics.each do |metric| %>
+    <div class="col-md-6 col-sm-12 col-lg-4">
+      <div class="metric">
+        <div class="name"><span class="prefix">#</span> <%= metric.obj.name %></div>
+        <div class="chart">
+          <center><%= chart metric.per_status, { chart: 'Doughnut' } %></center>
+        </div>
+        <div class="info">
+          <div class="avg-time pull-left">
+            Avg time: <%= metric.avg_resolution_time %>h
+          </div>
+          <div class="avg-sla pull-right">
+            <ul title="<%= t('sla.description') %>">
+              <% sla metric.avg_sla do |icon| %>
+                <li><%= icon %></li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<hr />
+<h3><%= t :groups %></h3>
+<div class="row">
+  <% @groups_metrics.each do |metric| %>
+    <div class="col-md-6 col-sm-12 col-lg-4">
+      <div class="metric">
+        <div class="name"><%= metric.obj.name %></div>
+        <div class="chart">
+          <center><%= chart metric.per_status, { chart: 'Doughnut' } %></center>
+        </div>
+        <div class="info">
+          <div class="avg-time pull-left">
+            Avg time: <%= metric.avg_resolution_time %>h
+          </div>
+          <div class="avg-sla pull-right">
+            <ul title="<%= t('sla.description') %>">
+              <% sla metric.avg_sla do |icon| %>
+                <li><%= icon %></li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

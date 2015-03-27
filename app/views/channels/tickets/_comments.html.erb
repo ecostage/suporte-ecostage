@@ -1,0 +1,46 @@
+
+<% unless @ticket.comments.empty? and (@ticket.approved? or @ticket.canceled?)%>
+  <div class="row">
+    <div class="col-sm-12">
+      <h3><%= t('comment.headings.main') %></h3>
+    </div>
+  </div>
+<% end %>
+
+<% unless @ticket.approved? or @ticket.canceled? %>
+  <div class="row">
+    <%= form_for @ticket, url: channel_ticket_new_comment_path(@channel, @ticket), method: :post, role: :form do |f| %>
+      <%= f.fields_for :comments, @ticket.comments.build do |t| %>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <%= t.text_area :content, class: 'form-control', rows: 6 %>
+          </div>
+          <%= f.submit t('comment.new.button'), class: 'btn btn-primary pull-right' %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="comments">
+  <% @ticket.comments.recently_first.each do |comment| %>
+    <div class="comment">
+      <div class="img">
+        <%= image_tag comment.author.avatar.url(:square), class: 'img-circle thumb' %>
+      </div>
+      <div class="box">
+        <div class="info">
+          <div class="author <%= comment.author.user_type %>">
+            <strong><%= comment.author.email %></strong>
+          </div>
+          <div class="date" title="<%= l comment.created_at %>">
+            <%= l comment.created_at, format: :default %>
+          </div>
+        </div>
+        <div class="content">
+          <%= simple_format comment.content %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
