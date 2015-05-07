@@ -84,4 +84,6 @@ Rails.application.configure do
   #config.action_mailer.default_url_options = { host: 'helpdesk.com' }
   #config.action_mailer.default_url_options = { host: 'project-help.tracersoft.com.br' }
   config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'] }
+
+  config.paperclip_defaults = { storage: :s3 }
 end
