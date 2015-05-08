@@ -34,7 +34,6 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
   config.include Paperclip::Shoulda::Matchers
   Capybara.javascript_driver = :poltergeist
-  config.treat_symbols_as_metadata_keys_with_true_values = true
 end
 
 ActiveRecord::Migration.maintain_test_schema!

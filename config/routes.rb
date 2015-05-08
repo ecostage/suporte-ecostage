@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     end
 
     get 'tickets/:id/download'=>'tickets#download', as: :ticket_attachment_download
+    get 'comments/:id/download'=>'comments#download', as: :comment_attachment_download
 
     resources :groups, only: [:new, :create, :show] do
       member do

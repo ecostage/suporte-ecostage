@@ -4,4 +4,10 @@ class Comment < ActiveRecord::Base
   validates_presence_of :ticket
 
   scope :recently_first, -> { all.order('created_at DESC') }
+
+  has_attached_file :attachment, styles: {
+    thumb: '100x100#'
+  }, :size => { :in => 0..25.megabytes }
+
+  validates_attachment_content_type :attachment, :content_type => [/\Aimage\/.*\Z/, /\application\/.*\Z/, /\text\/.*\Z/]
 end

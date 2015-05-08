@@ -4,3 +4,5 @@ pt-BR:
       main: Comentários
     new:
       button: Adicionar comentário
+    attachment:
+      new: Anexar arquivo

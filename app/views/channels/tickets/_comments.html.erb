@@ -14,6 +14,8 @@
         <div class="col-sm-12">
           <div class="form-group">
             <%= t.text_area :content, class: 'form-control', rows: 6 %>
+            <%= t.label 'Anexar arquivo' %>
+            <%= t.file_field :attachment %>
           </div>
           <%= f.submit t('comment.new.button'), class: 'btn btn-primary pull-right' %>
         </div>
@@ -39,6 +41,15 @@
         </div>
         <div class="content">
           <%= simple_format comment.content %>
+
+          <% if comment.attachment.present? %>
+            <div class="row">
+              <div class="col-sm-6">
+                <label><%= Ticket.human_attribute_name(:attachment) %>: </label>
+                <%= link_to comment.attachment_file_name, comment_attachment_download_path(comment), 'target'=>'_blank' %>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
