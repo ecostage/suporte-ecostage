@@ -282,7 +282,6 @@ describe Channels::TicketsController do
       put :reprove, { channel_id: channel, :id => ticket.id }
       ticket.reload
       expect(ticket.reproved?).to be_truthy
-      expect(ticket.resolved_at).to be(nil)
     end
 
     it "ticket can be cancelled by the attendant" do

@@ -5,18 +5,18 @@ describe TicketMetric do
     let(status.to_sym) { create(:ticket, status.to_sym) }
   end
 
-  let(:now) { DateTime.now }
-  let(:four_hours_ago) { now-4.hours }
-  let(:three_hours_ago) { now-3.hours }
-  let(:two_hours_ago) { now-2.hours }
+  let(:resolved_at) { Time.new(2015, 5, 11, 17) }
+  let(:four_hours_taken) { resolved_at-4.hours }
+  let(:three_hours_taken) { resolved_at-3.hours }
+  let(:two_hours_taken) { resolved_at-2.hours }
   let(:ticket1) {
-    create(:ticket, :approved, created_at: four_hours_ago, resolved_at: now)
+    create(:ticket, :approved, created_at: four_hours_taken, resolved_at: resolved_at)
   }
   let(:ticket2) {
-    create(:ticket, :approved, created_at: two_hours_ago, resolved_at: now)
+    create(:ticket, :approved, created_at: two_hours_taken, resolved_at: resolved_at)
   }
   let(:ticket3) {
-    create(:ticket, :approved, created_at: three_hours_ago, resolved_at: now)
+    create(:ticket, :approved, created_at: three_hours_taken, resolved_at: resolved_at)
   }
 
   describe 'per_status' do

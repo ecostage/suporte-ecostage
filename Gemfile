@@ -31,6 +31,8 @@ gem 'chart-js-rails'
 gem 'mail_view'
 gem 'unicorn'
 gem 'unicorn-rails'
+gem 'business_time'
+gem 'holidays'
 
 group :production do
   gem 'rails_12factor'

@@ -22,7 +22,7 @@ class TicketMetric < BaseMetric
   end
 
   def avg_resolution_time
-    unless @tickets.map(&:hours_taken).empty?
+    unless @tickets.empty?
       (@tickets.map(&:hours_taken).reduce(:+) / @tickets.size).to_i
     else
       0
@@ -30,7 +30,7 @@ class TicketMetric < BaseMetric
   end
 
   def avg_sla
-    unless @tickets.map(&:sla).empty?
+    unless @tickets.empty?
       @tickets.map(&:sla).reduce(:+) / @tickets.size
     else
       0

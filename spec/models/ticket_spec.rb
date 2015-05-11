@@ -60,4 +60,24 @@ describe Ticket do
       expect(ticket.status).to eq('approved')
     end
   end
+
+  describe '#hours_taken' do
+    let(:ticket) {
+      create(:ticket, created_at: created_at, resolved_at: resolved_at)
+    }
+    let(:created_at) { Time.new(2015, 5, 11, 10) }
+    let(:resolved_at) { Time.new(2015, 5, 11, 12) }
+
+    it 'returns the hours taken for ticket resolution' do
+      expect(ticket.hours_taken).to eq(2)
+    end
+
+    context 'through the night' do
+      let(:created_at) { Time.new(2015, 5, 11, 17) }
+      let(:resolved_at) { Time.new(2015, 5, 12, 10) }
+      it 'does not count hours out of workhour' do
+        expect(ticket.hours_taken).to eq(2)
+      end
+    end
+  end
 end
