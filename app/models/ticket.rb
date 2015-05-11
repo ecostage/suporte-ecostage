@@ -27,9 +27,9 @@ class Ticket < ActiveRecord::Base
 
   has_attached_file :attachment, styles: {
     thumb: '100x100#'
-  }, :size => { :in => 0..5.megabytes }, :s3_permissions => :private
+  }, :size => { :in => 0..25.megabytes }, :s3_permissions => :private
 
-  validates_attachment_content_type :attachment, :content_type => [/\Aimage\/.*\Z/, /\application\/.*\Z/, /\text\/.*\Z/]
+  validates_attachment_content_type :attachment, :content_type => [/\Aimage\/.*\Z/, /\Aapplication\/.*\Z/, /\Atext\/.*\Z/]
 
   recipients_for(:created) { User.attendant }
   recipients_for(:approved) { [assign_to] }
