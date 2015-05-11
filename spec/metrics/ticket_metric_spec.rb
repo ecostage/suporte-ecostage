@@ -1,79 +1,39 @@
 require 'spec_helper'
 
 describe TicketMetric do
+  Ticket.statuses.each do |status, _|
+    let(status.to_sym) { create(:ticket, status.to_sym) }
+  end
+
+  let(:now) { DateTime.now }
+  let(:four_hours_ago) { now-4.hours }
+  let(:three_hours_ago) { now-3.hours }
+  let(:two_hours_ago) { now-2.hours }
+  let(:ticket1) {
+    create(:ticket, :approved, created_at: four_hours_ago, resolved_at: now)
+  }
+  let(:ticket2) {
+    create(:ticket, :approved, created_at: two_hours_ago, resolved_at: now)
+  }
+  let(:ticket3) {
+    create(:ticket, :approved, created_at: three_hours_ago, resolved_at: now)
+  }
+
   describe 'per_status' do
     it 'returns a metric hash based on status' do
-      tickets = []
-      2.times.each do
-        ticket = create(:ticket)
-        ticket.unread!
-        tickets << ticket
-      end
-
-      3.times.each do
-        ticket = create(:ticket)
-        ticket.in_progress!
-        tickets << ticket
-      end
-
-      4.times.each do
-        ticket = create(:ticket)
-        ticket.done!
-        tickets << ticket
-      end
-
-      2.times.each do
-        ticket = create(:ticket)
-        ticket.canceled!
-        tickets << ticket
-      end
-
-      2.times.each do
-        ticket = create(:ticket)
-        ticket.approved!
-        tickets << ticket
-      end
-
-      3.times.each do
-        ticket = create(:ticket)
-        ticket.reproved!
-        tickets << ticket
-      end
-
+      tickets = [unread, done, in_progress, canceled, approved, reproved]
       metric = TicketMetric.new(tickets)
       metric_hash = metric.per_status
 
-      expect(metric_hash[:unread]).to eq(2)
-      expect(metric_hash[:in_progress]).to eq(3)
-      expect(metric_hash[:done]).to eq(4)
-      expect(metric_hash[:canceled]).to eq(2)
-      expect(metric_hash[:approved]).to eq(2)
-      expect(metric_hash[:reproved]).to eq(3)
+      Ticket.statuses.each do |status, _|
+        expect(metric_hash[status.to_sym]).to eq(1)
+      end
     end
   end
 
   describe 'avg resolution time' do
     it 'returns the avg time of tickets resolution in hours' do
-      tickets = []
-      now = DateTime.now
-      hours_ago_4 = now-4.hours
-      hours_ago_2 = now-2.hours
-      hours_ago_3 = now-3.hours
-
-      ticket = create(:ticket)
-      ticket.approved!
-      ticket.update created_at: hours_ago_4, resolved_at: now
-      tickets << ticket
-
-      ticket = create(:ticket)
-      ticket.approved!
-      ticket.update created_at: hours_ago_2, resolved_at: now
-      tickets << ticket
-
-      ticket = create(:ticket)
-      ticket.approved!
-      ticket.update created_at: hours_ago_3, resolved_at: now
-      tickets << ticket
+      tickets = [ticket1, ticket2, ticket3]
 
       metric = TicketMetric.new(tickets)
       hours = metric.avg_resolution_time
@@ -83,30 +43,11 @@ describe TicketMetric do
 
   describe 'avg sla' do
     it 'avg sla status' do
-      tickets = []
-      now = DateTime.now
-      hours_ago_5 = now-5.hours
-      hours_ago_4 = now-4.hours
-      hours_ago_3 = now-3.hours
-
-      ticket = create(:ticket)
-      ticket.approved!
-      ticket.update created_at: hours_ago_5, resolved_at: now, estimated_time: 5
-      tickets << ticket
-
-      ticket = create(:ticket)
-      ticket.approved!
-      ticket.update created_at: hours_ago_4, resolved_at: now, estimated_time: 5
-      tickets << ticket
-
-      ticket = create(:ticket)
-      ticket.approved!
-      ticket.update created_at: hours_ago_3, resolved_at: now, estimated_time: 5
-      tickets << ticket
+      tickets = [ticket1, ticket2, ticket3]
 
       metric = TicketMetric.new(tickets)
-      hours = metric.avg_sla
-      expect(hours).to eq(4)
+      sla_points = metric.avg_sla
+      expect(sla_points).to eq(3)
     end
   end
 end

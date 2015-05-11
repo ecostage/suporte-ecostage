@@ -128,11 +128,11 @@ class Ticket < ActiveRecord::Base
       return 0
     end
 
-    sla = estimated_time || 4 #TODO: default sla must be configurable
-    if hours_taken >= sla
+    max_hours = estimated_time || 4 #TODO: default sla must be configurable
+    if hours_taken >= max_hours
       sla_points
     else
-      (sla_points*(hours_taken/sla)).ceil
+      (sla_points*(hours_taken/max_hours)).ceil
     end
   end
 

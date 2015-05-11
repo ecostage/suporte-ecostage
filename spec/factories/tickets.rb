@@ -5,27 +5,17 @@ FactoryGirl.define do
     subject "Ticket subject"
     content "Ticket content"
     is_priority false
-    estimated_time 1
+    estimated_time 5
     complexity 1
     resolved_at "2014-09-17 12:12:23"
     attended_at "2014-09-17 12:12:23"
     association :created_by, factory: :client
     association :channel, factory: :channel
 
-    factory :approved_ticket do
-      status :approved
-    end
-
-    factory :reproved_ticket do
-      status :reproved
-    end
-
-    factory :in_progress_ticket do
-      status :in_progress
-    end
-
-    factory :done_ticket do
-      status :done
+    Ticket.statuses.each do |status, _|
+      trait status.to_sym do
+        status status
+      end
     end
   end
 end

@@ -214,7 +214,7 @@ describe Channels::TicketsController do
 
     it "if status different of unread never change status opening" do
       sign_in attendant
-      ticket = create(:in_progress_ticket)
+      ticket = create(:ticket, :in_progress)
       get :show, { channel_id: channel, :id => ticket.id }
       ticket.reload
       expect(ticket.in_progress?).to be_truthy
@@ -234,7 +234,7 @@ describe Channels::TicketsController do
     it "ticket done by a attendant" do
       channel = create(:channel)
       sign_in attendant
-      ticket = create(:in_progress_ticket, channel: channel)
+      ticket = create(:ticket, :in_progress, channel: channel)
       put :done, { channel_id: channel, :id => ticket.id }
       ticket.reload
       expect(ticket.done?).to be_truthy
@@ -243,7 +243,7 @@ describe Channels::TicketsController do
     it "ticket cannot be done by a client" do
       channel = create(:channel)
       sign_in client
-      ticket = create(:in_progress_ticket, channel: channel)
+      ticket = create(:ticket, :in_progress, channel: channel)
       put :done, { channel_id: channel, :id => ticket.id }
       ticket.reload
       expect(ticket.in_progress?).to be_truthy
@@ -252,7 +252,7 @@ describe Channels::TicketsController do
     it "ticket cannot be approved by a attendant" do
       channel = create(:channel)
       sign_in attendant
-      ticket = create(:done_ticket, channel: channel)
+      ticket = create(:ticket, :done, channel: channel)
       put :approve, { channel_id: channel, :id => ticket.id }
       ticket.reload
       expect(ticket.done?).to be_truthy
@@ -260,7 +260,7 @@ describe Channels::TicketsController do
 
     it "ticket approved by a client" do
       sign_in client
-      ticket = create(:done_ticket)
+      ticket = create(:ticket, :done)
       ticket.update created_by: client
       put :approve, { channel_id: channel, :id => ticket.id }
       ticket.reload
@@ -269,7 +269,7 @@ describe Channels::TicketsController do
 
     it "ticket cannot be reproved by a attendant" do
       sign_in attendant
-      ticket = create(:done_ticket)
+      ticket = create(:ticket, :done)
       put :reprove, { channel_id: channel, :id => ticket.id }
       ticket.reload
       expect(ticket.done?).to be_truthy
@@ -277,7 +277,7 @@ describe Channels::TicketsController do
 
     it "ticket reproved by a client" do
       sign_in client
-      ticket = create(:done_ticket)
+      ticket = create(:ticket, :done)
       ticket.update created_by: client
       put :reprove, { channel_id: channel, :id => ticket.id }
       ticket.reload
@@ -288,7 +288,7 @@ describe Channels::TicketsController do
     it "ticket can be cancelled by the attendant" do
       channel = create(:channel)
       sign_in attendant
-      ticket = create(:done_ticket, channel: channel)
+      ticket = create(:ticket, :done, channel: channel)
       put :cancel, { channel_id: channel, :id => ticket.id, reason: "Reason for cancel ticket" }
       ticket.reload
       expect(ticket.canceled?).to be_truthy
@@ -297,7 +297,7 @@ describe Channels::TicketsController do
 
     it "ticket cant be cancelled without a reason" do
       sign_in attendant
-      ticket = create(:done_ticket)
+      ticket = create(:ticket, :done)
       put :cancel, { channel_id: channel, :id => ticket.id }
       ticket.reload
       expect(ticket.canceled?).to be_falsy
@@ -305,7 +305,7 @@ describe Channels::TicketsController do
 
     it "ticket cant change status if approved" do
       sign_in client
-      ticket = create(:approved_ticket)
+      ticket = create(:ticket, :approved)
       ticket.update created_by: client
       put :reprove, { channel_id: channel, :id => ticket.id }
       ticket.reload
@@ -335,7 +335,7 @@ describe Channels::TicketsController do
       channel = create(:channel)
       sign_in attendant
 
-      ticket = create(:in_progress_ticket, channel: channel)
+      ticket = create(:ticket, :in_progress, channel: channel)
       ticket.update created_by: client
 
       expect {
@@ -347,7 +347,7 @@ describe Channels::TicketsController do
     it "when ticket is approved" do
       channel = create(:channel)
       sign_in client
-      ticket = create(:done_ticket, channel: channel)
+      ticket = create(:ticket, :done, channel: channel)
       ticket.update assign_to: attendant, created_by: client
 
       expect {
@@ -359,7 +359,7 @@ describe Channels::TicketsController do
     it "when ticket is reproved" do
       channel = create(:channel)
       sign_in client
-      ticket = create(:done_ticket, channel: channel)
+      ticket = create(:ticket, :done, channel: channel)
       ticket.update assign_to: attendant, created_by: client
 
       expect {
@@ -371,7 +371,7 @@ describe Channels::TicketsController do
     it "when ticket is canceled" do
       channel = create(:channel)
       sign_in attendant
-      ticket = create(:done_ticket, channel: channel)
+      ticket = create(:ticket, :done, channel: channel)
       ticket.update assign_to: attendant, created_by: client
 
       expect {
