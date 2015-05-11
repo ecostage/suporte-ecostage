@@ -8,7 +8,6 @@ development:
   database: helpdesk_development
   host: localhost
   username: postgres
-  :Gp
   host: localhost
   username: postgres
   database: helpdesk_test
