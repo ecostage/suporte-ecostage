@@ -24,7 +24,6 @@ feature 'commenting a ticket' do
   end
 
   scenario 'when a client wants to add a file' do
-    expect(page).to have_content('Anexar arquivo')
     attach_file('ticket[comments_attributes][0][attachment]', file)
     click_button I18n.t('comment.new.button')
     expect(page).to have_content('tracer.png')
