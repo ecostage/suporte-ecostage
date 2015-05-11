@@ -48,3 +48,16 @@
     margin-top: 10px;
   }
 }
+
+.comment_dropzone{
+  min-height: 150px;
+  border: 1px dashed rgba(0,0,0,0.2);
+  cursor: pointer;
+
+  & .dz-message{
+    padding: 75px 75px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 18px;
+  }
+}

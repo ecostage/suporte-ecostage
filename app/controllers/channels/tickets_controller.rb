@@ -132,7 +132,7 @@ class Channels::TicketsController < ApplicationController
   end
 
   def params_new_comment
-    params.require(:ticket).permit(comments_attributes: [:content]).tap do |whitelisted|
+    params.require(:ticket).permit(comments_attributes: [:content, :attachment]).tap do |whitelisted|
       whitelisted[:comments_attributes]['0'][:author_id] = current_user.id
     end
   end
