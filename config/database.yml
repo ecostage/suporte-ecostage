@@ -7,16 +7,8 @@ development:
   <<: *default
   database: helpdesk_development
   host: localhost
-  username: tracersoft
-  password: supertracer10
-
-production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-
-test:
-  <<: *default
+  username: postgres
+  :Gp
   host: localhost
-  username: tracersoft
-  password: supertracer10
+  username: postgres
   database: helpdesk_test

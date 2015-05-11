@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe Ticket do
   let(:ticket) { FactoryGirl.create(:ticket) }
-  let(:group) { create(:group) }
+  let!(:group) { create(:group, members: [client, client2]) }
+  let(:attendant) { create(:attendant) }
+  let(:client) { create(:client) }
+  let(:client2) { create(:client) }
+  let(:alone_client) { create(:client) }
 
   describe 'associations' do
     it { should have_many(:comments) }
@@ -13,36 +17,22 @@ describe Ticket do
     expect(ticket.status_humanized).to eq(I18n.translate("ticket.statuses.#{ticket.status}"))
   end
 
-  it 'should scope by user permission' do
-    ticket1 = create(:ticket)
-    ticket2 = create(:ticket)
-    ticket3 = create(:ticket)
-    ticket4 = create(:ticket)
+  describe '#user_scope' do
+    let(:client_ticket) { create(:ticket, created_by: client) }
+    let(:client2_ticket) { create(:ticket, created_by: client2) }
+    let(:alone_client_ticket) { create(:ticket, created_by: alone_client) }
 
-    client1 = create(:client)
-    client2 = create(:client)
-    client3 = create(:client)
+    it 'should scope by user permission' do
+      attendant_tickets = [alone_client_ticket, client_ticket]
 
-    attendant = create(:attendant)
+      expect(Ticket.user_scope(alone_client)).to contain_exactly(alone_client_ticket)
+      expect(Ticket.user_scope(attendant)).to contain_exactly(*attendant_tickets)
+    end
 
-    ticket1.update created_by: client1
-    ticket2.update created_by: client2
-    ticket3.update created_by: client3
-    ticket4.update created_by: client3
-
-    group.members << client1
-    group.members << client2
-
-    client1_tickets = [ticket1, ticket2]
-    client2_tickets = [ticket1, ticket2]
-    client3_tickets = [ticket3, ticket4]
-    attendant_tickets = [ticket1, ticket2, ticket3, ticket4]
-
-
-    expect(Ticket.user_scope(client1)).to contain_exactly(*client1_tickets)
-    expect(Ticket.user_scope(client2)).to contain_exactly(*client2_tickets)
-    expect(Ticket.user_scope(client3)).to contain_exactly(*client3_tickets)
-    expect(Ticket.user_scope(attendant)).to contain_exactly(*attendant_tickets)
+    it 'should scope by user group' do
+      tickets = [client_ticket, client2_ticket]
+      expect(Ticket.user_scope(client)).to contain_exactly(*tickets)
+    end
   end
 
   describe '#old?' do
@@ -68,6 +58,26 @@ describe Ticket do
       create(:ticket, updated_at: 16.days.ago, status: :done)
       ticket = Ticket.last
       expect(ticket.status).to eq('approved')
+    end
+  end
+
+  describe '#hours_taken' do
+    let(:ticket) {
+      create(:ticket, created_at: created_at, resolved_at: resolved_at)
+    }
+    let(:created_at) { Time.new(2015, 5, 11, 10) }
+    let(:resolved_at) { Time.new(2015, 5, 11, 12) }
+
+    it 'returns the hours taken for ticket resolution' do
+      expect(ticket.hours_taken).to eq(2)
+    end
+
+    context 'through the night' do
+      let(:created_at) { Time.new(2015, 5, 11, 17) }
+      let(:resolved_at) { Time.new(2015, 5, 12, 10) }
+      it 'does not count hours out of workhour' do
+        expect(ticket.hours_taken).to eq(2)
+      end
     end
   end
 end

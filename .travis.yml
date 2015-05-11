@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+- 2.1.0
+deploy:
+  provider: heroku
+  api_key:
+    secure: fJ5tgsDYRbLAJLVAn1i9akc/9AULq/iljK5Pa0eDPDs/z1QT64raWAElbf6irCNBiwn3PZ/l9qfap8qOxA7AKMlJ5n/0tjP0wQR5X1P9ZPvxwKJachKMDIM8TO65blnFmBCq5Aq57cwQo7iKyPhIQHzx1JlL0s7kO8Z7Todce2fj28TaV3nNXeBK05ioIcOdlPTBqoQ6ovcgEY7Uiaqhb+Q3QJWLzUwkndjDZZ6mHUDcsAnqWfd2L6gUAold7vkuGBv9NkFDn3b/FXWhbtjdWOxANTIMBKQuZtS7xLJt2gLj2PzbDNzA4iAJJC6kAN9veKvoaDRLK88j28CE9oV3zlU/ju8Ht6/X4OQxkb/rYhpLut8Cb1T4FSFBIP2gRCum71JHVj1LSbE7L0m357rpyI+CdHPXRzHQLwQoNBitniGIqd2iVpe5Vv3FOj38Qd+J4JLLKiI1qrz9zk320+QV8r+KX6xhdnso2WJjCjQV0o/l3P130eTfNc+C5KALYbQAU7pcsHOpFkmcrOu00UwSf3N2OXSyagDSQ/GqICuOVPKie45hV/LJ4vZPjpPHER1VlkYHuTN/JCTlc7RVIOxmmLvbgaYzYFdsoqxruYUQryvOzGaYE7qz8/Ex39tbD9OlcU7VTWRWy1tEgX8QHeNPUzJsSqsdV38Ce6gXsNV7IQI=
+  app: suporte-hd
+  on:
+    repo: tracersoft/project-help

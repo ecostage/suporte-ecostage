@@ -119,8 +119,8 @@ class Ticket < ActiveRecord::Base
   end
 
   def hours_taken
-    base_time = resolved_at || DateTime.now
-    ((base_time.to_time - created_at.to_time) / 1.hour)
+    resolved_at = self.resolved_at || DateTime.now.to_time
+    (created_at.business_time_until(resolved_at) / 1.hour).ceil
   end
 
   def sla
@@ -128,12 +128,19 @@ class Ticket < ActiveRecord::Base
       return 0
     end
 
-    sla = estimated_time || 4 #TODO: default sla must be configurable
-    if hours_taken >= sla
+    if exceeded_estimation?
       sla_points
     else
-      (sla_points*(hours_taken/sla)).ceil
+      (sla_points*(hours_taken/estimated_time.to_f)).ceil
     end
+  end
+
+  def estimated_time
+    super || 4 #TODO: Make it configurable
+  end
+
+  def exceeded_estimation?
+    hours_taken >= estimated_time
   end
 
   def status_humanized
@@ -152,7 +159,6 @@ class Ticket < ActiveRecord::Base
 
   def reproved_by(user)
     reproved!
-    update(resolved_at: nil)
     Notification.create(notifiable: self, created_by: user, action: :reproved).
       deliver
   end
