@@ -36,16 +36,6 @@ module Helpdesk
       enable_starttls_auto: true
     }
 
-    config.paperclip_defaults = {
-      :storage => :s3,
-      :s3_host_name => ENV['S3_HOST_NAME'],
-      :s3_credentials => {
-        :bucket => ENV['S3_BUCKET_NAME'],
-        :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-        :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-      }
-    }
-
     config.active_record.schema_format = :sql
     config.i18n.enforce_available_locales = false
     config.action_view.raise_on_missing_translations = false
