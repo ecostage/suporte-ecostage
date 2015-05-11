@@ -9,15 +9,17 @@
 
 <% unless @ticket.approved? or @ticket.canceled? %>
   <div class="row">
-    <%= form_for @ticket, url: channel_ticket_new_comment_path(@channel, @ticket), method: :post, role: :form do |f| %>
+    <%= form_for @ticket, url: channel_ticket_new_comment_path(@channel, @ticket),
+      method: :post, role: :form, data: { dropzone: true } do |f| %>
       <%= f.fields_for :comments, @ticket.comments.build do |t| %>
         <div class="col-sm-12">
           <div class="form-group">
             <%= t.text_area :content, class: 'form-control', rows: 6 %>
-            <%= t.label 'Anexar arquivo' %>
-            <%= t.file_field :attachment %>
+            <div class="comment_dropzone dropzone-previews">
+              <p class="dz-message">Anexar arquivo</p>
+            </div>
           </div>
-          <%= f.submit t('comment.new.button'), class: 'btn btn-primary pull-right' %>
+          <%= f.submit t('comment.new.button'), class: 'btn btn-primary pull-right', id: 'comment_submit' %>
         </div>
       <% end %>
     <% end %>
