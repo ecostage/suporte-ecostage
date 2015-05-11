@@ -1,4 +1,3 @@
-
 <% unless @ticket.comments.empty? and (@ticket.approved? or @ticket.canceled?)%>
   <div class="row">
     <div class="col-sm-12">
@@ -9,13 +8,20 @@
 
 <% unless @ticket.approved? or @ticket.canceled? %>
   <div class="row">
-    <%= form_for @ticket, url: channel_ticket_new_comment_path(@channel, @ticket), method: :post, role: :form do |f| %>
+    <%= form_for @ticket, url: channel_ticket_new_comment_path(@channel, @ticket),
+      method: :post, role: :form, data: { dropzone: true } do |f| %>
       <%= f.fields_for :comments, @ticket.comments.build do |t| %>
         <div class="col-sm-12">
           <div class="form-group">
             <%= t.text_area :content, class: 'form-control', rows: 6 %>
+            <div class="comment_dropzone dropzone-previews">
+              <p class="dz-message">Arraste arquivos aqui ou clique para anexar.</p>
+            </div>
+            <div class="fallback">
+              <%= t.file_field :attachment, class: 'form-control', rows: 6 %>
+            </div>
           </div>
-          <%= f.submit t('comment.new.button'), class: 'btn btn-primary pull-right' %>
+          <%= f.submit t('comment.new.button'), class: 'btn btn-primary pull-right', id: 'comment_submit' %>
         </div>
       <% end %>
     <% end %>
@@ -39,6 +45,15 @@
         </div>
         <div class="content">
           <%= simple_format comment.content %>
+
+          <% if comment.attachment.present? %>
+            <div class="row">
+              <div class="col-sm-6">
+                <label><%= Ticket.human_attribute_name(:attachment) %>: </label>
+                <%= link_to comment.attachment_file_name, comment_attachment_download_path(comment), 'target'=>'_blank' %>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
