@@ -9,13 +9,13 @@
 <% unless @ticket.approved? or @ticket.canceled? %>
   <div class="row">
     <%= form_for @ticket, url: channel_ticket_new_comment_path(@channel, @ticket),
-      method: :post, role: :form do |f| %>
+      method: :post, role: :form, data: { dropzone: true }, id: 'new-comment' do |f| %>
       <%= f.fields_for :comments, @ticket.comments.build do |t| %>
         <div class="col-sm-12">
           <div class="form-group">
             <%= t.text_area :content, class: 'form-control', rows: 6 %>
             <div class="comment_dropzone dropzone-previews hidden">
-              <p class="dz-message">Arraste arquivos aqui ou clique para anexar.</p>
+              <p class="dz-message">Solte um arquivo aqui para anexar.</p>
             </div>
             <div class="fallback">
               <%= t.file_field :attachment, class: 'form-control', rows: 6 %>
