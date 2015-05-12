@@ -104,25 +104,30 @@ class Channels::TicketsController < ApplicationController
 
   def new_comment
     @ticket = Ticket.find(params[:ticket_id])
-    @ticket.update(params_new_comment)
-    emails = if @ticket.comments.last.author.client?
-      User.attendant.pluck(:email)
-    else
-      [@ticket.created_by.email]
+    if @ticket.update(params_new_comment)
+      send_comment_notification
     end
-    CommentNotificationMailer.notify(emails, @ticket.comments.last).deliver
 
     redirect_to channel_ticket_path(channel_id: @channel, id: @ticket)
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
+
   def set_ticket
     @ticket = Ticket.find(params[:id])
   end
 
   def set_channel
     @channel = Channel.find params[:channel_id]
+  end
+
+  def send_comment_notification
+    emails = if @ticket.comments.last.author.client?
+      User.attendant.pluck(:email)
+    else
+      [@ticket.created_by.email]
+    end
+    CommentNotificationMailer.notify(emails, @ticket.comments.last).deliver
   end
 
   # Only allow a trusted parameter "white list" through.

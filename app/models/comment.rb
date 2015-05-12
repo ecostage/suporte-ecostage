@@ -7,7 +7,8 @@ class Comment < ActiveRecord::Base
 
   has_attached_file :attachment, styles: {
     thumb: '100x100#'
-  }, :size => { :in => 0..25.megabytes }
+  }, :size => { :in => 0..25.megabytes },
+  whiny: false
 
-  validates_attachment_content_type :attachment, :content_type => [/\Aimage\/.*\Z/, /\application\/.*\Z/, /\text\/.*\Z/]
+  validates_attachment_content_type :attachment, :content_type => [/\Aimage\/.*\Z/, /\Aapplication\/.*\Z/, /\Atext\/.*\Z/]
 end

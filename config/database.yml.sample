@@ -1,13 +1,15 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  username: postgres
+  host: localhost
   pool: 5
 
 development:
   <<: *default
   database: helpdesk_development
-  host: localhost
-  username: postgres
-  host: localhost
-  username: postgres
+
+test:
+  <<: *default
   database: helpdesk_test
+
