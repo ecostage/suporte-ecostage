@@ -119,7 +119,7 @@ class Ticket < ActiveRecord::Base
   end
 
   def hours_taken
-    resolved_at = self.resolved_at || DateTime.now.to_time
+    resolved_at = self.resolved_at || DateTime.current.to_time
     (created_at.business_time_until(resolved_at) / 1.hour).ceil
   end
 
@@ -165,7 +165,7 @@ class Ticket < ActiveRecord::Base
 
   def done_by(user)
     done!
-    update(resolved_at: DateTime.now)
+    update(resolved_at: DateTime.current)
     Notification.create(notifiable: self, created_by: user, action: :done).
       deliver
   end

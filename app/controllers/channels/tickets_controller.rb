@@ -21,7 +21,7 @@ class Channels::TicketsController < ApplicationController
 
     if @ticket.unread? and !current_user.client?
       @ticket.in_progress!
-      @ticket.update attended_at: DateTime.now
+      @ticket.update attended_at: DateTime.current
     end
     respond_with(@channel, @ticket)
   end
