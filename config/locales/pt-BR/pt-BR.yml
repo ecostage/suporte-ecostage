@@ -84,3 +84,6 @@ pt-BR:
     invitations:
       body: "Você foi convidado para fazer parte do suporte!"
       subject: "Você foi convidado para fazer parte do suporte!"
+    reports:
+      body: "Confira as informações de tickets da semana"
+      subject: "Resumo da semana"

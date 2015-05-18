@@ -6,15 +6,15 @@ class WeekendReport
   end
 
   def attended_tickets
-    opened_tickets.attended
+    @attended_tickets ||= opened_tickets.attended
   end
 
   def solved_tickets
-    opened_tickets.solved
+    @solved_tickets ||= opened_tickets.solved
   end
 
   def opened_tickets
-    resource_entity.where(created_at: date.all_week)
+    @opened_tickets ||= resource_entity.where(created_at: date.all_week)
   end
 
   protected

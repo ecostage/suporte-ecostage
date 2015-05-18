@@ -53,4 +53,8 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: [:show]
   end
+
+  if Rails.env.development?
+    mount MailPreview => 'mail_preview'
+  end
 end
