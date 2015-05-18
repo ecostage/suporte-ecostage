@@ -45,6 +45,9 @@ class Ticket < ActiveRecord::Base
   context_for :canceled, :default_notification_context
   context_for :assigned, :default_notification_context
 
+  scope :solved, -> { where.not(resolved_at: nil) }
+  scope :attended, -> { where.not(attended_at: nil) }
+
   scope :user_scope, -> (user) {
     if user.client?
       where(created_by: user.siblings.to_a)

@@ -1,0 +1,41 @@
+<% content_for :subject do %>
+  <%= I18n.t('mailer.reports.subject') %>
+<% end %>
+<div style="display: inline-block; vertical-align: top; margin: 20px;">
+  <p style="font-size: 18px;">
+    Tickets abertos: <%= @report.opened_tickets.count %>
+</p>
+<ul style="list-style-type:none;text-align:center;padding:0;">
+  <% @report.opened_tickets.each do |ticket| %>
+    <li>
+      <%= link_to ticket.subject, channel_ticket_url(ticket.channel, ticket) %>
+    </li>
+  <% end %>
+</ul>
+</div>
+
+<div style="display: inline-block; vertical-align:top; margin: 20px;;">
+  <p style="font-size: 18px;">
+    Tickets atendidos: <%= @report.attended_tickets.count %>
+</p>
+<ul style="list-style-type:none;text-align:center; padding: 0;">
+  <% @report.attended_tickets.each do |ticket| %>
+    <li>
+      <%= link_to ticket.subject, channel_ticket_url(ticket.channel, ticket) %>
+    </li>
+  <% end %>
+</ul>
+</div>
+
+<div style="display: inline-block; vertical-align: top; margin: 20px;">
+  <p style="font-size: 18px;">
+    Tickets resolvidos: <%= @report.solved_tickets.count %>
+</p>
+<ul style="list-style-type:none;text-align:center;padding:0;">
+  <% @report.solved_tickets.each do |ticket| %>
+    <li>
+      <%= link_to ticket.subject, channel_ticket_url(ticket.channel, ticket) %>
+    </li>
+  <% end %>
+</ul>
+</div>
