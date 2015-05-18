@@ -44,13 +44,14 @@
     </a>
   <% end %>
 </h3>
-<p class="group-channels">
+<div class="group-channels">
   <% @group.channels.each do |channel| %>
-    <%= link_to channel_tickets_path(channel) do %>
+    <%= link_to channel_tickets_path(channel), class: "inline-link" do %>
       <span class="prefix">#</span><%= channel.name %>
     <% end %>
+    <%= button_to '✖', delete_channel_group_path(@group, channel), method: :delete, class: "inline-button" %>
   <% end %>
-</p>
+</div>
 
 <h3>Usuários</h3>
 <div id="error"></div>

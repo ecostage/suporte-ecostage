@@ -48,6 +48,7 @@ Rails.application.routes.draw do
         post 'add_user'
         delete 'inactivate_member'
         post 'add_channel'
+        delete 'channel/:channel_id' => 'groups#delete_channel', as: :delete_channel
       end
     end
 

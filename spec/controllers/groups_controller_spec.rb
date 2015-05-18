@@ -77,4 +77,21 @@ describe GroupsController do
       expect(ActionMailer::Base.deliveries.size).to eq 1
     end
   end
+
+  describe 'DELETE #delete_channel' do
+    let(:admin) { create(:admin) }
+    let(:channel) { create(:channel) }
+    let(:group) { create(:group) }
+
+    before do
+      sign_in admin
+      group.channels << channel
+    end
+
+    it 'destroys the relationship' do
+      delete :delete_channel, { id: group, channel_id: channel }
+      group.reload
+      expect(group.channels).not_to include(channel)
+    end
+  end
 end

@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   respond_to :html, :json
+  before_action :find_group, except: [:new, :create]
 
   def new
     @group = Group.new
@@ -8,7 +9,6 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @group = Group.find(params[:id])
     authorize @group
     @group.update(group_params)
     respond_with(@group)
@@ -21,15 +21,13 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:id])
     authorize @group
     respond_with(@group)
   end
 
   def add_user
-    @group = Group.find(params[:id])
     authorize @group, :update?
-    
+
     if @group.invite(params[:email], current_user)
       render invite_user_with_success_message(params[:email])
     else
@@ -38,7 +36,6 @@ class GroupsController < ApplicationController
   end
 
   def inactivate_member
-    @group = Group.find(params[:id])
     authorize @group, :edit?
     @user = User.find params[:member_id]
     @user.inactive!
@@ -46,7 +43,6 @@ class GroupsController < ApplicationController
   end
 
   def add_channel
-    @group = Group.find(params[:id])
     authorize @group, :update?
     unless @group.channel_ids.include? params[:channel_id]
       @group.channels << Channel.find(params[:channel_id])
@@ -54,7 +50,19 @@ class GroupsController < ApplicationController
     respond_with(@group)
   end
 
+  def delete_channel
+    authorize @group, :update?
+    GroupChannel
+      .find_by(group_id: @group.id, channel_id: params[:channel_id])
+      .destroy
+    respond_with(@group)
+  end
+
   private
+
+  def find_group
+    @group ||= Group.find(params[:id])
+  end
 
   def group_params
     params.require(:group).permit(:name, :purpose, member_ids: [],
