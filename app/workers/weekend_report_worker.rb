@@ -1,8 +1,8 @@
 class WeekendReportWorker
-  include SuckerPunch::Job
-  include FistOfFury::Recurrent
+  include Sidekiq::Worker
+  include Sidetiq::Recurrent
 
-  recurs { weekly.day_of_week(:friday).hour_of_day(12) }
+  recurrence { weekly.day_of_week(:friday).hour_of_day(12) }
 
   def perform
     Rails.logger.info 'Sending weekly ticket report'

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe WeekendReport do
-  let(:report) { described_class.new(date) }
+RSpec.describe TicketsReport do
+  let(:report) { described_class.new(date.all_week) }
   let(:date) { Date.today }
 
   describe '#opened_tickets' do

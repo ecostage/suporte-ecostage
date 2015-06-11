@@ -1,8 +1,8 @@
-class WeekendReport
-  attr_accessor :date
+class TicketsReport
+  attr_accessor :period
 
-  def initialize(date)
-    @date = date
+  def initialize(period)
+    @period = period
   end
 
   def attended_tickets
@@ -14,7 +14,7 @@ class WeekendReport
   end
 
   def opened_tickets
-    @opened_tickets ||= resource_entity.where(created_at: date.all_week)
+    @opened_tickets ||= resource_entity.where(created_at: period)
   end
 
   protected

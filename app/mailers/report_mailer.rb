@@ -3,8 +3,8 @@ class ReportMailer < ActionMailer::Base
   default from: 'Suporte! <contato@tracersoft.com.br>'
 
   def weekend_report(date = Date.today)
-    @report = WeekendReport.new(date)
-    recipients = User.admin.active
+    @report = TicketsReport.new(date.all_week)
+    recipients = User.attendant.active
     mail to: recipients, subject: I18n.t('mailer.reports.subject')
   end
 end
