@@ -13,6 +13,10 @@ class TicketsReport
     @solved_tickets ||= opened_tickets.solved
   end
 
+  def average_hours_taken
+    opened_tickets.average_hours_taken
+  end
+
   def opened_tickets
     @opened_tickets ||= resource_entity.where(created_at: period)
   end

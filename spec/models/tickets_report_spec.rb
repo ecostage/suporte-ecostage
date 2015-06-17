@@ -4,6 +4,15 @@ RSpec.describe TicketsReport do
   let(:report) { described_class.new(date.all_week) }
   let(:date) { Date.today }
 
+  describe '#average_hours_taken' do
+    let!(:ticket_one) { create(:ticket, hours_taken: 4, created_at: date) }
+    let!(:ticket_two) { create(:ticket, hours_taken: 2, created_at: date) }
+
+    it 'returns the average of hours taken' do
+      expect(report.average_hours_taken).to eq(3)
+    end
+  end
+
   describe '#opened_tickets' do
     subject(:tickets) { report.opened_tickets }
     let!(:old_ticket) { create(:ticket, created_at: date.prev_week.end_of_week) }

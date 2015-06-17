@@ -91,6 +91,10 @@ class Ticket < ActiveRecord::Base
 
   after_find :auto_approve!
 
+  def self.average_hours_taken
+    average(:hours_taken)
+  end
+
   def auto_approve!
     TicketAutoApproval.new(self).auto_approve!
   end

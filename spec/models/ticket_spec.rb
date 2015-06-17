@@ -61,6 +61,15 @@ describe Ticket do
     end
   end
 
+  describe '.average_hours_taken' do
+    let!(:ticket_one) { create(:ticket, hours_taken: 4) }
+    let!(:ticket_two) { create(:ticket, hours_taken: 2) }
+
+    it 'returns the average of hours taken' do
+      expect(Ticket.average_hours_taken).to eq(3)
+    end
+  end
+
   describe '#hours_taken' do
     let(:ticket) {
       create(:ticket, created_at: created_at, resolved_at: resolved_at)
