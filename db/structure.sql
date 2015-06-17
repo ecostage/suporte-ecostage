@@ -248,38 +248,6 @@ ALTER SEQUENCE group_channels_id_seq OWNED BY group_channels.id;
 
 
 --
--- Name: group_members; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE group_members (
-    id integer NOT NULL,
-    user_id integer,
-    group_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: group_members_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE group_members_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: group_members_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE group_members_id_seq OWNED BY group_members.id;
-
-
---
 -- Name: groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -411,7 +379,8 @@ CREATE TABLE tickets (
     attachment_content_type character varying(255),
     attachment_file_size integer,
     attachment_updated_at timestamp without time zone,
-    channel_id integer
+    channel_id integer,
+    hours_taken integer
 );
 
 
@@ -521,13 +490,6 @@ ALTER TABLE ONLY group_channels ALTER COLUMN id SET DEFAULT nextval('group_chann
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY group_members ALTER COLUMN id SET DEFAULT nextval('group_members_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY groups ALTER COLUMN id SET DEFAULT nextval('groups_id_seq'::regclass);
 
 
@@ -597,14 +559,6 @@ ALTER TABLE ONLY comments
 
 ALTER TABLE ONLY group_channels
     ADD CONSTRAINT group_channels_pkey PRIMARY KEY (id);
-
-
---
--- Name: group_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY group_members
-    ADD CONSTRAINT group_members_pkey PRIMARY KEY (id);
 
 
 --
@@ -701,20 +655,6 @@ CREATE INDEX index_group_channels_on_channel_id ON group_channels USING btree (c
 --
 
 CREATE INDEX index_group_channels_on_group_id ON group_channels USING btree (group_id);
-
-
---
--- Name: index_group_members_on_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_group_members_on_group_id ON group_members USING btree (group_id);
-
-
---
--- Name: index_group_members_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_group_members_on_user_id ON group_members USING btree (user_id);
 
 
 --
@@ -817,8 +757,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140918184341');
 
 INSERT INTO schema_migrations (version) VALUES ('20140918214320');
 
-INSERT INTO schema_migrations (version) VALUES ('20140919005259');
-
 INSERT INTO schema_migrations (version) VALUES ('20140919135800');
 
 INSERT INTO schema_migrations (version) VALUES ('20140920010952');
@@ -826,12 +764,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140920010952');
 INSERT INTO schema_migrations (version) VALUES ('20140921024138');
 
 INSERT INTO schema_migrations (version) VALUES ('20140921041737');
-
-INSERT INTO schema_migrations (version) VALUES ('20140921050416');
-
-INSERT INTO schema_migrations (version) VALUES ('20140921051305');
-
-INSERT INTO schema_migrations (version) VALUES ('20140921051429');
 
 INSERT INTO schema_migrations (version) VALUES ('20140921051829');
 
@@ -868,4 +800,6 @@ INSERT INTO schema_migrations (version) VALUES ('20141007023833');
 INSERT INTO schema_migrations (version) VALUES ('20141008041812');
 
 INSERT INTO schema_migrations (version) VALUES ('20150507192242');
+
+INSERT INTO schema_migrations (version) VALUES ('20150617144743');
 

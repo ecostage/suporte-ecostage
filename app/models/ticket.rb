@@ -23,6 +23,8 @@ class Ticket < ActiveRecord::Base
   validates_presence_of :created_by, associated: true
   validates_length_of :subject, maximum: 254
 
+  before_save :set_hours_taken, unless: ->(ticket) { ticket.hours_taken && ticket.resolved_at }
+
   enum status: [:unread, :reproved, :in_progress, :done, :approved, :canceled]
 
   has_attached_file :attachment, styles: {
@@ -121,9 +123,10 @@ class Ticket < ActiveRecord::Base
     5 #TODO: configurable
   end
 
-  def hours_taken
+  def set_hours_taken
+    created_at = self.created_at || DateTime.current.to_time
     resolved_at = self.resolved_at || DateTime.current.to_time
-    (created_at.business_time_until(resolved_at) / 1.hour).ceil
+    self.hours_taken = (created_at.business_time_until(resolved_at) / 1.hour).ceil
   end
 
   def sla
