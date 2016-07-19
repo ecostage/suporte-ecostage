@@ -8,5 +8,5 @@
 
 
 User.create!([
-  { email: 'admin@tracersoft.com.br', password: 'supertracer10', user_type: :admin },
+  { email: 'administrativo@ecostage.com.br', password: 'supereco10', user_type: :admin },
 ])
